@@ -84,6 +84,12 @@ Example:
 
 ---
 
+## JavaScript SDK
+
+https://www.npmjs.com/package/trust-os-sdk
+
+---
+
 ## Real-World Applications
 
 Trust OS can be applied to:
