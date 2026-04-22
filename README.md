@@ -122,6 +122,34 @@ https://demo.trust-os.io
 
 ---
 
+## Public Demo (No API Key)
+
+Use the demo endpoint for testing:
+
+POST https://demo.trust-os.io/v1/decision/score  
+POST https://demo.trust-os.io/v1/decision/log  
+GET  https://demo.trust-os.io/v1/decision/verify/:id  
+
+This endpoint is rate-limited and intended for demonstration purposes only.
+
+---
+
+## Production API (API Key Required)
+
+For production use:
+
+POST https://api.trust-os.io/v1/decision/score  
+POST https://api.trust-os.io/v1/decision/log  
+GET  https://api.trust-os.io/v1/decision/verify/:id  
+
+Authentication:
+
+x-api-key: YOUR_API_KEY
+
+Please contact us to obtain an API key.
+
+---
+
 ## Real-World Applications
 
 Trust OS can be applied to:
