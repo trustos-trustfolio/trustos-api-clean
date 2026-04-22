@@ -44,75 +44,9 @@ GET  /v1/decision/verify/:id
 
 A user attempts to execute a transaction:
 
-score risk  
-log decision  
-verify integrity  
-
----
-
-## Example (curl)
-
-### 1. Score a decision
-
-    curl -X POST https://demo.trust-os.io/v1/decision/score \
-      -H "Content-Type: application/json" \
-      -H "x-api-key: YOUR_API_KEY" \
-      -d '{
-        "user_id": "user_123",
-        "action": "transfer",
-        "amount": 500000,
-        "currency": "USD",
-        "destination": "wallet_abc",
-        "timestamp": "2026-04-22T00:00:00Z",
-        "context": {
-          "device": "web",
-          "location": "JP",
-          "profile": "demo"
-        }
-      }'
-
-Response:
-
-    {
-      "decision_id": "dec_xxx",
-      "risk_level": "MEDIUM",
-      "recommendation": "REVIEW",
-      "timestamp": "2026-04-22T00:00:00Z"
-    }
-
----
-
-### 2. Log the decision
-
-    curl -X POST https://demo.trust-os.io/v1/decision/log \
-      -H "Content-Type: application/json" \
-      -H "x-api-key: YOUR_API_KEY" \
-      -d '{
-        "decision_id": "dec_xxx"
-      }'
-
-Response:
-
-    {
-      "ledger_id": "ledger_xxx",
-      "status": "RECORDED",
-      "timestamp": "2026-04-22T00:00:00Z"
-    }
-
----
-
-### 3. Verify integrity
-
-    curl -X GET https://demo.trust-os.io/v1/decision/verify/dec_xxx \
-      -H "x-api-key: YOUR_API_KEY"
-
-Response:
-
-    {
-      "decision_id": "dec_xxx",
-      "verified": true,
-      "integrity": "VALID"
-    }
+1. Score risk  
+2. Log decision  
+3. Verify integrity  
 
 ---
 
@@ -122,21 +56,9 @@ https://demo.trust-os.io
 
 ---
 
-## Public Demo (No API Key)
+## Production API (Ready to Use)
 
-Use the demo endpoint for testing:
-
-POST https://demo.trust-os.io/v1/decision/score  
-POST https://demo.trust-os.io/v1/decision/log  
-GET  https://demo.trust-os.io/v1/decision/verify/:id  
-
-This endpoint is rate-limited and intended for demonstration purposes only.
-
----
-
-## Production API (API Key Required)
-
-For production use:
+Use the production API for integration:
 
 POST https://api.trust-os.io/v1/decision/score  
 POST https://api.trust-os.io/v1/decision/log  
@@ -144,9 +66,21 @@ GET  https://api.trust-os.io/v1/decision/verify/:id
 
 Authentication:
 
-x-api-key: YOUR_API_KEY
+    x-api-key: YOUR_API_KEY
 
-Please contact us to obtain an API key.
+Example:
+
+    curl -X POST https://api.trust-os.io/v1/decision/score \
+      -H "Content-Type: application/json" \
+      -H "x-api-key: YOUR_API_KEY" \
+      -d '{
+        "user_id": "user_123",
+        "action": "transfer",
+        "amount": 500000,
+        "currency": "USD",
+        "destination": "wallet_abc",
+        "timestamp": "2026-04-22T00:00:00Z"
+      }'
 
 ---
 
@@ -166,9 +100,9 @@ Trust OS can be applied to:
 ## Notes
 
 - Replace YOUR_API_KEY with your API key  
-- This is a minimal implementation designed for easy integration  
-- The current demo focuses on a simple score → log → verify flow  
-- This repository is intended as a lightweight starting point for developers  
+- Production API is publicly accessible but requires authentication  
+- This repository provides a minimal integration pattern  
+- Internal logic and implementation details are not exposed  
 
 ---
 
