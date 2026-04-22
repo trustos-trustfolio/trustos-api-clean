@@ -56,6 +56,16 @@ https://demo.trust-os.io
 
 ---
 
+## Examples
+
+Basic usage:
+examples/basic.js
+
+Advanced usage:
+examples/advanced.js
+
+---
+
 ## Production API (Ready to Use)
 
 Use the production API for integration:
