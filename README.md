@@ -1,145 +1,164 @@
 # Trust OS API
 
-Trust OS is a verification layer for decisions before execution.
+Trust OS is a Decision Verification API.
 
-This repository provides a minimal API flow:
+Trust OS verifies high-impact decisions before execution and returns a verifiable response including a decision ID, recommendation, risk score, risk level, policy reference, proof hash, and latency.
 
-1. Score a decision  
-2. Log the decision  
-3. Verify its integrity  
+It is designed for financial systems, stablecoin payment flows, AI agents, AML decision traceability, and compliance workflows.
 
 ---
 
 ## What this does
 
-Trust OS helps systems verify decisions before execution.
+Most systems execute first and explain later.
 
-Instead of executing first and auditing later, this API lets developers:
+Trust OS flips that model:
 
-- evaluate a decision  
-- record the decision  
-- verify the integrity of the recorded result  
+Verify before execution.
 
-This makes it easier to build verifiable transaction and decision flows across financial systems, wallets, autonomous systems, and AI-driven applications.
+This API allows developers to send a decision context and receive a verification result before the action is executed.
 
 ---
 
-## Use Case
+## Production API
 
-Verify a transaction before execution.
+```txt
+https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev
+```
+
+---
+
+## Endpoint
+
+```txt
+POST /v1/decision/verify
+```
+
+---
+
+## Authentication
+
+All requests require an API key.
+
+Pass your API key with the `x-api-key` header.
+
+```txt
+x-api-key: YOUR_API_KEY
+```
 
 ---
 
 ## Quick Start
 
-### Endpoints
-
-POST /v1/decision/score  
-POST /v1/decision/log  
-GET  /v1/decision/verify/:id  
-
----
-
-## Example Flow
-
-A user attempts to execute a transaction:
-
-1. Score risk  
-2. Log decision  
-3. Verify integrity  
+```bash
+curl -X POST https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev/v1/decision/verify \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -d '{
+    "user_id": "test_user",
+    "action": "transfer",
+    "amount": 50000,
+    "currency": "JPY",
+    "destination": "wallet_xyz"
+  }'
+```
 
 ---
 
-## Demo
+## Response Example
 
-https://demo.trust-os.io
-
----
-
-## Examples
-
-Basic usage:
-examples/basic.js
-
-Advanced usage:
-examples/advanced.js
-
----
-
-## Production API (Ready to Use)
-
-Use the production API for integration:
-
-POST https://api.trust-os.io/v1/decision/score  
-POST https://api.trust-os.io/v1/decision/log  
-GET  https://api.trust-os.io/v1/decision/verify/:id  
-
-Authentication:
-
-    x-api-key: YOUR_API_KEY
-
-Example:
-
-    curl -X POST https://api.trust-os.io/v1/decision/score \
-      -H "Content-Type: application/json" \
-      -H "x-api-key: YOUR_API_KEY" \
-      -d '{
-        "user_id": "user_123",
-        "action": "transfer",
-        "amount": 500000,
-        "currency": "USD",
-        "destination": "wallet_abc",
-        "timestamp": "2026-04-22T00:00:00Z"
-      }'
+```json
+{
+  "decision_id": "dec_xxx",
+  "recommendation": "ALLOW",
+  "risk_score": 0.19,
+  "risk_level": "LOW",
+  "policy": "Payment Approval Policy v1.0",
+  "proof_hash": "abc123...",
+  "latency_ms": 1
+}
+```
 
 ---
 
 ## JavaScript SDK
 
+```bash
+npm install trust-os-sdk
+```
+
+npm:
+
 https://www.npmjs.com/package/trust-os-sdk
+
+GitHub:
+
+https://github.com/trustos-trustfolio/trustos-sdk
 
 ---
 
-## Real-World Applications
+## SDK Example
 
-Trust OS can be applied to:
+```js
+const { TrustOSClient } = require("trust-os-sdk");
 
-- payment authorization integrity  
-- stablecoin and card verification flows  
-- AI agent action verification  
-- DAO treasury execution guardrails  
-- cross-border settlement integrity  
-- trade execution integrity  
+const client = new TrustOSClient({
+  baseUrl: "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev",
+  apiKey: "YOUR_API_KEY"
+});
+
+(async () => {
+  const result = await client.verifyDecision({
+    user_id: "test_user",
+    action: "transfer",
+    amount: 50000,
+    currency: "JPY",
+    destination: "wallet_xyz"
+  });
+
+  console.log(result);
+})();
+```
+
+---
+
+## Use Cases
+
+- Stablecoin payment approval
+- AML decision traceability
+- AI agent action verification
+- Risk-based workflow approval
+- Compliance and audit evidence
+- Financial decision infrastructure
+- Cross-border settlement integrity
+- DAO treasury execution guardrails
 
 ---
 
 ## Notes
 
-- Replace YOUR_API_KEY with your API key  
-- Production API is publicly accessible but requires authentication  
-- This repository provides a minimal integration pattern  
-- Internal logic and implementation details are not exposed  
+- Production API is publicly accessible through API Gateway
+- API key is required
+- Internal scoring and verification logic are not exposed
+- This repository provides a minimal integration pattern
+- The API is designed to stay on the pre-execution decision path
 
 ---
 
-## Why this matters
+## Positioning
 
-Most systems execute first and explain later.
+Trust OS is not post-event monitoring.
 
-Trust OS flips that model:
-
-- verify before execution  
-- record the decision path  
-- prove integrity afterwards  
+Trust OS is a decision verification layer before execution.
 
 ---
 
 ## Summary
 
-Trust OS provides a simple but powerful pattern:
+Trust OS provides a simple API pattern:
 
-1. Decide before execution  
-2. Record the decision  
-3. Verify the integrity  
+1. Submit a decision context
+2. Verify before execution
+3. Receive a verifiable decision response
 
-Built for the era of AI agents and autonomous systems.
+Built for the era of AI agents, stablecoins, and autonomous financial systems.
