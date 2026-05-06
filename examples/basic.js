@@ -1,36 +1,21 @@
-const { execSync } = require("child_process");
 const { TrustOSClient } = require("trust-os-sdk");
 
-const bearerToken = execSync("gcloud auth print-identity-token", {
-  encoding: "utf-8"
-}).trim();
-
 const client = new TrustOSClient({
-  baseUrl: "https://trustos-api-591254547688.asia-northeast1.run.app",
-  apiKey: "YOUR_API_KEY",
-  bearerToken
+  baseUrl: "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev",
+  apiKey: "YOUR_API_KEY"
 });
 
 (async () => {
   try {
-    const decision = await client.score({
-      user_id: "test",
+    const result = await client.verifyDecision({
+      user_id: "test_user",
       action: "transfer",
-      amount: 1000,
-      currency: "USD",
-      destination: "wallet_xxx",
-      timestamp: new Date().toISOString()
+      amount: 50000,
+      currency: "JPY",
+      destination: "wallet_xyz"
     });
 
-    console.log("decision:", decision);
-
-    const log = await client.log({
-      decisionId: decision.decision_id
-    });
-
-    console.log("log:", log);
-    const verify = await client.verify(decision.decision_id);
-    console.log("verify:", verify);
+    console.log("verification result:", result);
   } catch (err) {
     console.error("error:", err.message);
   }
