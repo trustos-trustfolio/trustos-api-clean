@@ -1,7 +1,7 @@
 const { TrustOSClient } = require("trust-os-sdk");
 
 const client = new TrustOSClient({
-  baseUrl: "https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev",
+  baseUrl: "https://api.trust-os.io",
   apiKey: "YOUR_API_KEY"
 });
 

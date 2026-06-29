@@ -29,7 +29,7 @@ Trust OS is a Decision Verification Platform that helps organizations verify hig
 ## Quick Start
 
 ```sh
-curl -X POST https://trustos-core-gateway-v2-7jm9owrs.an.gateway.dev/v1/decision/verify \
+curl -X POST https://api.trust-os.io/v1/decision/verify \
   -H "Content-Type: application/json" \
   -H "x-api-key: YOUR_API_KEY" \
   -d '{
